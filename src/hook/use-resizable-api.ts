@@ -2,7 +2,7 @@ import {useEffect} from 'react'
 import {
   restoreDefaultFn
 } from '../utils/api'
-import {IGetMaP, IGetMapApiParam, IResizableContext} from '../@types'
+import {IGetMaP, IGetMapApiParam, IResizableApi, IResizableContext} from '../@types'
 import {createMap} from '../utils/util'
 
 export const useResizableApi = (context: IResizableContext, props: any) => {
@@ -18,7 +18,7 @@ export const useResizableApi = (context: IResizableContext, props: any) => {
   }
 
   useEffect(() => {
-    const api = {
+    const api: IResizableApi = {
       restoreDefault,
       setVisibility,
       getMap

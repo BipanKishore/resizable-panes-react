@@ -10,9 +10,10 @@ export class ResizerModel {
   isStorPresent: boolean
   oldVisibility: boolean
 
-  size: number
+  // size: number
   preSize: number // previousVisible
   resizerSize: number
+  visibileSize: number
   visibilityChangedLast: boolean
   initialVisibility: IBooleanOrUndefined
 
@@ -21,21 +22,23 @@ export class ResizerModel {
     const {resizerSize, visibility = {}} = resizableProps
 
     this.initialVisibility = visibility[id]
-    const show = visibility[id] !== undefined ? visibility[id] : true
+    // const show = visibility[id] !== undefined ? visibility[id] : true
     // console.log('show', show)
+
     this.id = `${RESIZER}-${id}`
     this.isStorPresent = !store.empty
-    this.resizerSize = paneProps.resizerSize || resizerSize as number
+    this.resizerSize = paneProps.resizerSize || resizerSize as number || 0
+    this.visibileSize = this.resizerSize
 
     if (this.isStorPresent) {
-      const storedResizer = store.getStoredResizer(this.id)
-      this.visibility = storedResizer.visibility
+      // const storedResizer = store.getStoredResizer(this.id)
+      // this.visibility = storedResizer.visibility
       // this.preSize = storedResizer.preSize
       // this.size = storedResizer.size
     } else {
-      this.visibility = show as boolean
+      // this.visibility = show as boolean
       this.preSize = 0
-      this.size = 0
+      // this.size = 0
     }
   }
 
@@ -45,7 +48,7 @@ export class ResizerModel {
         // this.api.setVisibility(this.visibility)
         break
       case this.isRegistered:
-        this.visibility = this.api.visibility
+        // this.visibility = this.api.visibility
     }
     this.isRegistered = true
   }
@@ -55,14 +58,24 @@ export class ResizerModel {
     this.api = api
     this.registerMe()
     // if (this.initialVisibility === undefined) {
-    this.resizerSize = api.visibility ? api.getVisibleSize() : 0
+    // this.resizerSize = api.visibility ? api.getVisibleSize() : 0
+    this.resizerSize = api.getVisibleSize()
+    this.visibileSize = api.getVisibleSize()
+    console.log(this.resizerSize, this.visibileSize, api.visibility)
+
     // }
 
     // console.log(this.resizerSize, this.id)
   }
 
+  // This model will be registered when we will call this
   getSize () {
-    return this.isRegistered ? (this.visibility ? this.resizerSize : 0) : 0
+    return this.visibility ? this.resizerSize : 0
+    // return this.isRegistered ? (this.visibility ? this.resizerSize : 0) : 0
+  }
+
+  getVisibileSize () {
+
   }
 
   setUISize () {

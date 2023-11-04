@@ -245,7 +245,7 @@ export class PaneModel {
     const maxSize = ratioToNumber(containerSize, maxRatioValue, this.maxSize)
     // Need to check if it is right
     const size = this.visibility ? storeSize : 0
-    this.initializeSizes(size, minSize, maxSize, storeSize, this.visibility)
+    this.initializeSizes(storeSize, minSize, maxSize, storeSize, this.visibility)
   }
 
   fixChange (key: IPaneNumericKeys, change: number) {
